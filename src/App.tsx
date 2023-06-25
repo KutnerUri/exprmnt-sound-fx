@@ -9,6 +9,12 @@ import { Sound } from "./experiments/sound";
 import { turnOff, turnOn } from "./state-mutators";
 import { shadowTheme } from "./theme/shadows";
 
+const SOUNDS = {
+  eerieChoir: "./sounds/eerie-choir.mp3",
+  eerieChoirLight: "./sounds/eerie-choir-long.mp3",
+  dead: "./sounds/noise.mp3",
+};
+
 function ClickFirst() {
   const [hasClicked, setClicked] = useState(false);
 
@@ -31,22 +37,22 @@ function ClickFirst() {
 }
 
 function App() {
-  const [running, setRunning] = useState(false);
-  const [running02, setRunning02] = useState(false);
+  const [hoveringContainer, setHoveringContainer] = useState(false);
+  const [hoveringButton, setHoveringButton] = useState(false);
   const [dead, setDead] = useState(false);
 
   // const animation = useRunningArray(contrastAnimations, running);
   useEffect(() => {
-    if (dead) setRunning(false);
-    if (dead) setRunning02(false);
+    if (dead) setHoveringContainer(false);
+    if (dead) setHoveringButton(false);
   }, [dead]);
 
   return (
     <div className={cn(modernTheme(), shadowTheme())}>
       <div
         className={styles.card}
-        onMouseEnter={turnOn(setRunning)}
-        onMouseLeave={turnOff(setRunning)}
+        onMouseEnter={turnOn(setHoveringContainer)}
+        onMouseLeave={turnOff(setHoveringContainer)}
       >
         <h3>Delete Account</h3>
         {dead && (
@@ -58,21 +64,21 @@ function App() {
           <StitchesButton
             intent="danger"
             onClick={turnOn(setDead)}
-            className={cn(running02 && shake())}
-            onMouseEnter={turnOn(setRunning02)}
-            onMouseLeave={turnOff(setRunning02)}
+            className={cn(hoveringButton && shake())}
+            onMouseEnter={turnOn(setHoveringButton)}
+            onMouseLeave={turnOff(setHoveringButton)}
           >
             delete forever
           </StitchesButton>
         )}
-        <Sound src="/sounds/eerie-choir-long.mp3" play={running} loop />
+        <Sound src={SOUNDS.eerieChoirLight} play={hoveringContainer} loop />
         <Sound
-          src="/sounds/eerie-choir.mp3"
-          play={running02}
+          src={SOUNDS.eerieChoir}
+          play={hoveringButton}
           loop
           fadeIn={3000}
         />
-        <Sound src="/sounds/noise.mp3" play={dead} loop fadeIn={500} />
+        <Sound src={SOUNDS.dead} play={dead} loop fadeIn={500} />
       </div>
     </div>
   );
