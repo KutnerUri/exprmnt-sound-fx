@@ -1,6 +1,7 @@
 import { css } from "@stitches/react";
 import { ButtonHTMLAttributes } from "react";
 import { theme } from "./theme";
+import classNames from "classnames";
 
 const vanillaButton = css({
   "user-select": "none",
@@ -139,13 +140,14 @@ export function StitchesButton({
   priority = "medium",
   intent,
   children,
+  className,
   ...props
 }: Props) {
   return (
     <button
       data-priority={priority}
       data-intent={intent}
-      className={themedButton()}
+      className={classNames(themedButton(), className)}
       {...props}
     >
       {children}
@@ -155,8 +157,8 @@ export function StitchesButton({
 }
 
 function Emoticon({ intent }: { intent?: "default" | "danger" | "success" }) {
-  if (intent == "danger") return <span>😨</span>;
-  if (intent == "success") return <span>😄</span>;
+  if (intent === "danger") return <span>😨</span>;
+  if (intent === "success") return <span>😄</span>;
   // return <span></span>;
   return null;
 }

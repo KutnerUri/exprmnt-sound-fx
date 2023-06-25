@@ -11,6 +11,8 @@ export const theme = {
   background: "rgba(var(--bg-color), var(--bg-opacity))",
   backgroundAccent: "rgba(var(--accent-color), var(--bg-opacity))",
   // backgroundAccentFull: "rgba(var(--accent-color), var(--bg-opacity))",
+  /** @deprecated */
+  invisBorder: "var(--invis-border-color)",
   borderColor: "var(--border-color)",
 
   onAccent: "var(--on-accent-color)",
@@ -31,8 +33,9 @@ export const modernTheme = css({
 
   "--accent-color": values.royalBlue,
   "--bg-color": "0, 0, 0",
-  "--border-color": "transparent",
-  // "--border-color": "hsla(0, 0%, 61%, 0.38)",
+  /** @deprecated */
+  "--invis-border-color": "transparent",
+  "--border-color": "hsla(0, 0%, 61%, 0.61)",
 
   "--on-accent-color": "#ffffff",
 

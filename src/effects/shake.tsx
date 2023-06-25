@@ -1,5 +1,5 @@
 import { css, keyframes } from "@stitches/react";
-import { times } from "../times";
+import { times } from "./times";
 
 const shakeTransform = keyframes({
   "0%": { transform: "translate(1px, 1px) rotate(0deg)" },
