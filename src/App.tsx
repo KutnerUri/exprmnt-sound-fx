@@ -1,49 +1,81 @@
-import { CssComponent } from "@stitches/react/types/styled-component";
+import cn from "classnames";
 import { useEffect, useState } from "react";
-import "./App.css";
-import { Item } from "./components/item";
-// import { motionAnimations } from "./effects/movement";
-import { changeAnimation } from "./effects/change";
+import styles from "./app.module.scss";
 
-export type Anim = {
-  style: CssComponent;
-  displayName: string;
-  duration?: number;
-};
+import { StitchesButton } from "./components/stitches-button";
+import { modernTheme } from "./components/theme";
+import { shake } from "./effects/shake";
+import { Sound } from "./experiments/sound";
+import { turnOff, turnOn } from "./state-mutators";
+import { shadowTheme } from "./theme/shadows";
 
-function App() {
-  const [running, setRunning] = useState(false);
-  const [idx, setIdx] = useState(0);
-  const total = changeAnimation.length;
-  const animation = changeAnimation[idx];
+function ClickFirst() {
+  const [hasClicked, setClicked] = useState(false);
 
-  useEffect(() => {
-    if (!running) return () => {};
-    const { duration = 1000 } = animation;
-
-    const tid = setTimeout(() => {
-      setIdx((x) => (x + 1) % total);
-    }, duration);
-    return () => clearTimeout(tid);
-  }, [running, animation, total]);
+  if (hasClicked) return <App />;
 
   return (
-    <div>
-      <div className={["App"].join(" ")}>
-        <Item className={animation.style()} />
-        {/* <Item className={animation.style()} /> */}
-        <span>{animation.displayName}</span>
-      </div>
-      <div className={["App"].join(" ")}>
-        <input
-          type="checkbox"
-          checked={running}
-          onChange={() => setRunning((x) => !x)}
-        />
-        start
+    <div className={styles.clickWall}>
+      <div className={styles.card}>
+        <StitchesButton onClick={turnOn(setClicked)}>
+          Click here to start
+        </StitchesButton>
+        <p style={{ textAlign: "center" }}>
+          (Some browsers require user interaction before making sounds)
+          <br />
+          <b>🔉 please turn on your audio 🔊</b>
+        </p>
       </div>
     </div>
   );
 }
 
-export default App;
+function App() {
+  const [running, setRunning] = useState(false);
+  const [running02, setRunning02] = useState(false);
+  const [dead, setDead] = useState(false);
+
+  // const animation = useRunningArray(contrastAnimations, running);
+  useEffect(() => {
+    if (dead) setRunning(false);
+    if (dead) setRunning02(false);
+  }, [dead]);
+
+  return (
+    <div className={cn(modernTheme(), shadowTheme())}>
+      <div
+        className={styles.card}
+        onMouseEnter={turnOn(setRunning)}
+        onMouseLeave={turnOff(setRunning)}
+      >
+        <h3>Delete Account</h3>
+        {dead && (
+          <span onClick={turnOff(setDead)} className={styles.skull}>
+            ☠️
+          </span>
+        )}
+        {!dead && (
+          <StitchesButton
+            intent="danger"
+            onClick={turnOn(setDead)}
+            className={cn(running02 && shake())}
+            onMouseEnter={turnOn(setRunning02)}
+            onMouseLeave={turnOff(setRunning02)}
+          >
+            delete forever
+          </StitchesButton>
+        )}
+        <Sound src="/sounds/eerie-choir-long.mp3" play={running} loop />
+        <Sound
+          src="/sounds/eerie-choir.mp3"
+          play={running02}
+          loop
+          fadeIn={3000}
+        />
+        <Sound src="/sounds/noise.mp3" play={dead} loop fadeIn={500} />
+      </div>
+    </div>
+  );
+}
+
+export default ClickFirst;
