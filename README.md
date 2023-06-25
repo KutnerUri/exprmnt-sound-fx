@@ -2,6 +2,8 @@ The goal of this project is to see how sounds can be included in Web documents, 
 
 This project will attempt doing so by recreating the Stanely Kubric Space Odyssey experience - an element that will "sing" when getting close, hinting to the user of its significance.
 
+Give it a try ==> [Live demo](https://kutneruri.github.io/exprmnt-sound-fx/)!
+
 ## Context
 
 Sound design is a pretty much completely ignored aspect of the web experience. Other than the big tech, almost no one is using audio ques in their apps.  
