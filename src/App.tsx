@@ -4,7 +4,7 @@ import styles from "./app.module.scss";
 
 import { StitchesButton } from "./components/stitches-button";
 import { modernTheme } from "./components/theme";
-import { shake } from "./effects/shake";
+import { shake, shakeHover } from "./effects/shake";
 import { Sound } from "./experiments/sound";
 import { turnOff, turnOn } from "./state-mutators";
 import { shadowTheme } from "./theme/shadows";
@@ -15,6 +15,8 @@ const SOUNDS = {
   dead: "./sounds/noise.mp3",
 };
 
+// the browser may block sounds if played before the user has a chance to interact.
+// this screen forces the user to interact
 function ClickFirst() {
   const [hasClicked, setClicked] = useState(false);
 
@@ -41,7 +43,7 @@ function App() {
   const [hoveringButton, setHoveringButton] = useState(false);
   const [dead, setDead] = useState(false);
 
-  // const animation = useRunningArray(contrastAnimations, running);
+  // stop hover effects when in the "dead"
   useEffect(() => {
     if (dead) setHoveringContainer(false);
     if (dead) setHoveringButton(false);
@@ -51,6 +53,7 @@ function App() {
     <div className={cn(modernTheme(), shadowTheme())}>
       <div
         className={styles.card}
+        // manually track hover - we don't have css for sound
         onMouseEnter={turnOn(setHoveringContainer)}
         onMouseLeave={turnOff(setHoveringContainer)}
       >
@@ -64,13 +67,16 @@ function App() {
           <StitchesButton
             intent="danger"
             onClick={turnOn(setDead)}
-            className={cn(hoveringButton && shake())}
+            className={shakeHover()}
+            // manually track hover - we don't have css for sound
             onMouseEnter={turnOn(setHoveringButton)}
             onMouseLeave={turnOff(setHoveringButton)}
           >
             delete forever
           </StitchesButton>
         )}
+
+        {/* sounds effects: */}
         <Sound src={SOUNDS.eerieChoirLight} play={hoveringContainer} loop />
         <Sound
           src={SOUNDS.eerieChoir}

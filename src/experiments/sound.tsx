@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+// using Howler instead of built in Audio() because it provides .fade() controls
 import { Howl } from "howler";
 
 export type AudioProps = {
@@ -9,6 +10,7 @@ export type AudioProps = {
   // fadeOut?: number;
 };
 
+/** React wrapper for sound player */
 export const Sound = ({
   src,
   play = false,
@@ -33,12 +35,12 @@ export const Sound = ({
 
     if (play) {
       elem.fade(0, 1, fadeIn);
-      // elem.
       elem.play();
     } else {
       elem.pause();
     }
   }, [play]);
 
-  return null; // This component does not render anything
+  // This component does not render anything
+  return null;
 };
