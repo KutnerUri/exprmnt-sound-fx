@@ -1,9 +1,9 @@
 export const times = {
-  blink: "80ms",
-  quick: "130ms",
-  snappy: "210ms",
-  normal: "330ms",
-  relaxed: "485ms",
-  long: "785ms",
-  sloth: "1271ms",
+  blink: 80,
+  quick: 130,
+  snappy: 210,
+  normal: 330,
+  relaxed: 485,
+  long: 785,
+  sloth: 1271,
 };

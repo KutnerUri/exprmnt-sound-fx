@@ -6,6 +6,7 @@ export type AudioProps = {
   src: string;
   play?: boolean;
   loop?: boolean;
+  autoReset?: boolean;
   fadeIn?: number;
   // fadeOut?: number;
 };
@@ -16,6 +17,7 @@ export const Sound = ({
   play = false,
   loop = false,
   fadeIn = 300,
+  autoReset = false,
 }: AudioProps) => {
   const audioElement = useRef<null | Howl>();
 
@@ -38,8 +40,9 @@ export const Sound = ({
       elem.play();
     } else {
       elem.pause();
+      if (autoReset) elem.stop();
     }
-  }, [play]);
+  }, [play, autoReset]);
 
   // This component does not render anything
   return null;

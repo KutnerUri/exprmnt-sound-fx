@@ -40,5 +40,5 @@ What did you feel? Would you incorporate sounds in your app?
 - [x] play audio on :hover
 - [x] play something else on click
 - [x] replace sounds with something from the Space Odyssey 2001
-- [ ] style to look like the slab.
+- [x] style to look like the slab.
 - [ ] style page to look like its surrounding.

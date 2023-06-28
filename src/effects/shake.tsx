@@ -16,7 +16,7 @@ const shakeTransform = keyframes({
 });
 
 export const shake = css({
-  animation: `${shakeTransform} ${times.long} infinite cubic-bezier(.36,.07,.19,.97) both`,
+  animation: `${shakeTransform} ${times.long}ms infinite cubic-bezier(.36,.07,.19,.97) both`,
   transform: "translate3d(0, 0, 0)",
   "backface-visibility": "hidden",
   perspective: "1000px",
@@ -24,7 +24,7 @@ export const shake = css({
 
 export const shakeHover = css({
   "&:hover": {
-    animation: `${shakeTransform} ${times.long} infinite cubic-bezier(.36,.07,.19,.97) both`,
+    animation: `${shakeTransform} ${times.long}ms infinite cubic-bezier(.36,.07,.19,.97) both`,
     transform: "translate3d(0, 0, 0)",
     "backface-visibility": "hidden",
     perspective: "1000px",
